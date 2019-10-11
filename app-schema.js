@@ -1,13 +1,13 @@
 module.exports = `
   type SiteUser {
-    external_id: String!
+    id: String!
     email: String!
     first_name: String
     last_name: String
   }
 
   type Site {
-    external_id: String!
+    id: String!
     host: String!
     users: [SiteUser]!
     secret: String!
