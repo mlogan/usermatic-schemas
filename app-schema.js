@@ -1,32 +1,32 @@
 module.exports = `
   type SiteUser {
-    id: String!
+    id: ID!
     email: String!
     first_name: String
     last_name: String
   }
 
   type Site {
-    id: String!
+    id: ID!
     host: String!
     users: [SiteUser]!
     secret: String!
   }
 
   type Query {
-    sites(userId: String!): [Site]!
-    site(siteId: String!): Site!
+    sites(userId: ID!): [Site]!
+    site(siteId: ID!): Site!
   }
 
   type Mutation {
 
     createSite(
-      userId: String!
+      userId: ID!
       host: String!
     ): Site!
 
     addSiteUser(
-      siteId: String!
+      siteId: ID!
       email: String!
       password: String!
     ): SiteUser!

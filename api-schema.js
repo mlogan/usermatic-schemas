@@ -1,6 +1,6 @@
 module.exports = `
   type SvcUser {
-    id: String!
+    id: ID!
     email: String!
   }
 
@@ -18,7 +18,7 @@ module.exports = `
   }
 
   type Query {
-    svcGetSessionJWT(siteId: String!): SvcSessionData
+    svcGetSessionJWT(siteId: ID!): SvcSessionData
     svcGetAuthenticatedUser: SvcUser!
   }
 
