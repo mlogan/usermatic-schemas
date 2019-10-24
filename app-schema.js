@@ -2,8 +2,21 @@ module.exports = `
   type SiteUser {
     id: ID!
     email: String!
+    verified_email: Boolean
     first_name: String
     last_name: String
+  }
+
+  input SiteConfigInput {
+    verifyEmail: Boolean
+    requireVerification: Boolean
+  }
+
+  type SiteConfig {
+    # Send verification email?
+    verifyEmail: Boolean
+    # Require email verification before login
+    requireVerification: Boolean
   }
 
   type Site {
@@ -11,6 +24,7 @@ module.exports = `
     host: String!
     users: [SiteUser]!
     secret: String!
+    config: SiteConfig!
   }
 
   type Query {
@@ -30,5 +44,10 @@ module.exports = `
       email: String!
       password: String!
     ): SiteUser!
+
+    setSiteConfig(
+      siteId: ID!
+      config: SiteConfigInput!
+    ): SiteConfig!
   }
 `
