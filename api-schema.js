@@ -22,6 +22,10 @@ module.exports = `
     svcGetAuthenticatedUser: SvcUser!
   }
 
+  type VerificationResult {
+    redirectUri: String!
+  }
+
   type Mutation {
     svcLogout: Boolean
     svcLogin(email: String!, password: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
@@ -32,5 +36,7 @@ module.exports = `
       loginAfterCreation: Boolean = false
       stayLoggedIn: Boolean = false
     ): SvcAuthToken
+
+    svcVerifyEmail(token: String!): VerificationResult
   }
 `
