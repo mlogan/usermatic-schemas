@@ -2,6 +2,7 @@ module.exports = `
   type SvcUser {
     id: ID!
     email: String!
+    emailIsVerified: Boolean!
   }
 
   type SvcAuthToken {
@@ -38,5 +39,6 @@ module.exports = `
     ): SvcAuthToken
 
     svcVerifyEmail(token: String!): VerificationResult
+    svcSendVerificationEmail: Boolean
   }
 `
