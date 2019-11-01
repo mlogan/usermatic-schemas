@@ -10,8 +10,14 @@ module.exports = `
   input SiteConfigInput {
     verifyEmail: Boolean
     requireVerification: Boolean
+
+    # where verification emails should link to
+    verificationTargetUri: String
     # where to redirect the user after clicking a verification email.
     verificationRedirectUri: String
+
+    # where password reset emails should link to
+    resetPasswordUri: String
   }
 
   type SiteConfig {
@@ -19,8 +25,14 @@ module.exports = `
     verifyEmail: Boolean
     # Require email verification before login
     requireVerification: Boolean
+
+    # where verification emails should link to
+    verificationTargetUri: String
     # where to redirect the user after clicking a verification email.
     verificationRedirectUri: String
+
+    # where password reset emails should link to
+    resetPasswordUri: String
   }
 
   type Site {

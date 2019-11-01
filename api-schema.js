@@ -38,7 +38,12 @@ module.exports = `
       stayLoggedIn: Boolean = false
     ): SvcAuthToken
 
+    svcChangePassword(oldPassword: String!, newPassword: String!): Boolean
+
     svcVerifyEmail(token: String!): VerificationResult
     svcSendVerificationEmail: Boolean
+
+    svcResetPassword(token: String!, newPassword: String!): Boolean
+    svcRequestPasswordResetEmail(email: String!): Boolean
   }
 `
