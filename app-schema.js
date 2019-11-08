@@ -55,6 +55,8 @@ module.exports = `
       host: String!
     ): Site!
 
+    deleteSite(siteId: ID!): Boolean!
+
     addSiteUser(
       siteId: ID!
       email: String!
