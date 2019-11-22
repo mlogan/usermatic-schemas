@@ -1,5 +1,5 @@
 module.exports = `
-  type SiteUser {
+  type AppUser {
     id: ID!
     email: String!
     verified_email: Boolean
@@ -7,7 +7,11 @@ module.exports = `
     last_name: String
   }
 
-  input SiteConfigInput {
+  input HostInput {
+    hostname: String!
+  }
+
+  input AppConfigInput {
     verifyEmail: Boolean
     requireVerification: Boolean
 
@@ -20,7 +24,7 @@ module.exports = `
     resetPasswordUri: String
   }
 
-  type SiteConfig {
+  type AppConfig {
     # Send verification email?
     verifyEmail: Boolean
     # Require email verification before login
@@ -35,37 +39,38 @@ module.exports = `
     resetPasswordUri: String
   }
 
-  type Site {
+  type App {
     id: ID!
     host: String!
-    users: [SiteUser]!
+    users: [AppUser]!
     secret: String!
-    config: SiteConfig!
+    config: AppConfig!
   }
 
   type Query {
-    sites(userId: ID!): [Site]!
-    site(siteId: ID!): Site!
+    apps(userId: ID!): [App]!
+    app(appId: ID!): App!
   }
 
   type Mutation {
 
-    createSite(
+    createApp(
       userId: ID!
-      host: String!
-    ): Site!
+      name: String!
+      hosts: [HostInput]!
+    ): App!
 
-    deleteSite(siteId: ID!): Boolean!
+    deleteApp(appId: ID!): Boolean!
 
-    addSiteUser(
-      siteId: ID!
+    addAppUser(
+      appId: ID!
       email: String!
       password: String!
-    ): SiteUser!
+    ): AppUser!
 
-    setSiteConfig(
-      siteId: ID!
-      config: SiteConfigInput!
-    ): SiteConfig!
+    setAppConfig(
+      appId: ID!
+      config: AppConfigInput!
+    ): AppConfig!
   }
 `
