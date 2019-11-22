@@ -7,7 +7,7 @@ module.exports = `
 
   type SvcAuthToken {
     # A JWT that has been signed with the shared secret key for the
-    # site that the user is logged in to. This JWT should be sent to the
+    # app that the user is logged in to. This JWT should be sent to the
     # client site's server, which can verify the JWT to ascertain that
     # the user is logged in to the client site.
     userJwt: String!
@@ -19,7 +19,7 @@ module.exports = `
   }
 
   type Query {
-    svcGetSessionJWT(siteId: ID!): SvcSessionData
+    svcGetSessionJWT(appId: ID!): SvcSessionData
     svcGetAuthenticatedUser: SvcUser!
   }
 
