@@ -39,12 +39,17 @@ module.exports = `
     resetPasswordUri: String
   }
 
+  type AppHost {
+    hostname: String!
+  }
+
   type App {
     id: ID!
     name: String!
     users: [AppUser]!
     secret: String!
     config: AppConfig!
+    hosts: [AppHost]!
   }
 
   type Query {
