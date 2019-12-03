@@ -41,7 +41,7 @@ module.exports = `
 
   type App {
     id: ID!
-    host: String!
+    name: String!
     users: [AppUser]!
     secret: String!
     config: AppConfig!
