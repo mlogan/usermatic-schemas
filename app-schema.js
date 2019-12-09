@@ -40,6 +40,7 @@ module.exports = `
   }
 
   type AppHost {
+    id: ID!
     hostname: String!
   }
 
@@ -66,6 +67,10 @@ module.exports = `
     ): App!
 
     deleteApp(appId: ID!): Boolean!
+
+    addHost(appId: ID!, host: String!): AppHost!
+
+    removeHost(appId: ID!, hostId: ID!): Boolean!
 
     addAppUser(
       appId: ID!
