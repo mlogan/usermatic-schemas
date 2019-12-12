@@ -22,6 +22,8 @@ module.exports = `
 
     # where password reset emails should link to
     resetPasswordUri: String
+    # where to redirect the user after resetting their password
+    resetPasswordRedirectUri: String
   }
 
   type AppConfig {
@@ -37,6 +39,8 @@ module.exports = `
 
     # where password reset emails should link to
     resetPasswordUri: String
+    # where to redirect the user after resetting their password
+    resetPasswordRedirectUri: String
   }
 
   type AppHost {

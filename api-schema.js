@@ -27,6 +27,10 @@ module.exports = `
     redirectUri: String!
   }
 
+  type PasswordResetResult {
+    redirectUri: String
+  }
+
   type Mutation {
     svcLogout: Boolean
     svcLogin(email: String!, password: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
@@ -40,10 +44,10 @@ module.exports = `
 
     svcChangePassword(oldPassword: String!, newPassword: String!): Boolean
 
-    svcVerifyEmail(token: String!): VerificationResult
+    svcVerifyEmail(token: String!): VerificationResult!
     svcSendVerificationEmail: Boolean
 
-    svcResetPassword(token: String!, newPassword: String!): Boolean
+    svcResetPassword(token: String!, newPassword: String!): PasswordResetResult!
     svcRequestPasswordResetEmail(email: String!): Boolean
   }
 `
