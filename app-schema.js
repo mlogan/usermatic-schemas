@@ -51,7 +51,7 @@ module.exports = `
   type App {
     id: ID!
     name: String!
-    users: [AppUser]!
+    users (count: Int, offset: Int): [AppUser]!
     secret: String!
     config: AppConfig!
     hosts: [AppHost]!
