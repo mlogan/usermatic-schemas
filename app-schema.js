@@ -82,6 +82,10 @@ module.exports = `
       password: String!
     ): AppUser!
 
+    deleteAppUser(
+      userId: ID!
+    ): Boolean!
+
     setAppConfig(
       appId: ID!
       config: AppConfigInput!
