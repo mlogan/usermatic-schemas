@@ -24,6 +24,9 @@ module.exports = `
     resetPasswordUri: String
     # where to redirect the user after resetting their password
     resetPasswordRedirectUri: String
+
+    # How strong must a password be for a user to use it?
+    minPasswordStrength: Int
   }
 
   type AppConfig {
@@ -41,6 +44,9 @@ module.exports = `
     resetPasswordUri: String
     # where to redirect the user after resetting their password
     resetPasswordRedirectUri: String
+
+    # How strong must a password be for a user to use it?
+    minPasswordStrength: Int
   }
 
   type AppHost {

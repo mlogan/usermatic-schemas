@@ -13,9 +13,14 @@ module.exports = `
     userJwt: String!
   }
 
+  type AppConfig {
+    minPasswordStrength: Int
+  }
+
   type SvcSessionData {
     auth: SvcAuthToken
     csrfToken: String!
+    config: AppConfig
   }
 
   type Query {
