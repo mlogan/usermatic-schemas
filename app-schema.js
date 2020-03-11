@@ -63,9 +63,34 @@ module.exports = `
     hosts: [AppHost]!
   }
 
+  type StripeCustomer {
+    id: ID!
+    stripeId: ID!
+    userId: ID!
+  }
+
+  type StripeSetupIntent {
+    # same as clientSecret for now.
+    id: ID!
+    clientSecret: ID!
+  }
+
+  type Stripe {
+    id: ID! # the userId who is doing the checkout
+    setupIntent: StripeSetupIntent!
+    customer: StripeCustomer
+  }
+
   type Query {
     apps(userId: ID!): [App]!
     app(appId: ID!): App!
+    stripe(userId: ID!): Stripe!
+  }
+
+  enum PricePlan {
+    BASIC
+    PRO
+    PREMIUM
   }
 
   type Mutation {
@@ -96,5 +121,13 @@ module.exports = `
       appId: ID!
       config: AppConfigInput!
     ): AppConfig!
+
+    stripeCreateCustomer(
+      userId: ID!
+      plan: PricePlan!
+      paymentMethod: ID!
+      email: String!
+      paymentConsent: Boolean!
+    ): StripeCustomer!
   }
 `
