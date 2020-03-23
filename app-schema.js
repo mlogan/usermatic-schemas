@@ -63,10 +63,35 @@ module.exports = `
     hosts: [AppHost]!
   }
 
+  enum PricePlan {
+    BASIC
+    PRO
+    PREMIUM
+  }
+
+  type StripeLineItem {
+    description: String!
+    quantity: Int!
+    amount: Int!
+  }
+
+  type StripeInvoice {
+    periodStart: Int!
+    periodEnd: Int!
+    lineItems: [StripeLineItem!]!
+    subtotal: Int!
+    tax: Int
+    total: Int!
+  }
+
   type StripeCustomer {
     id: ID!
     stripeId: ID!
     userId: ID!
+    name: String!
+    email: String!
+    plan: PricePlan!
+    upcomingInvoice: StripeInvoice!
   }
 
   type StripeSetupIntent {
@@ -85,12 +110,6 @@ module.exports = `
     apps(userId: ID!): [App]!
     app(appId: ID!): App!
     stripe(userId: ID!): Stripe!
-  }
-
-  enum PricePlan {
-    BASIC
-    PRO
-    PREMIUM
   }
 
   type Mutation {
@@ -127,6 +146,7 @@ module.exports = `
       plan: PricePlan!
       paymentMethod: ID!
       email: String!
+      name: String!
       paymentConsent: Boolean!
     ): StripeCustomer!
   }
