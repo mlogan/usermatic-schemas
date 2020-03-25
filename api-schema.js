@@ -15,6 +15,11 @@ module.exports = `
 
   type AppConfig {
     minPasswordStrength: Int
+
+    fbLoginEnabled: Boolean!
+    fbLoginUrl: String!
+    googleLoginEnabled: Boolean!
+    googleLoginUrl: String!
   }
 
   type SvcSessionData {
@@ -37,8 +42,10 @@ module.exports = `
   }
 
   type Mutation {
-    svcLogout: Boolean
-    svcLogin(email: String!, password: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
+    logout: Boolean
+    loginPassword(email: String!, password: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
+
+    loginOauth(oauthToken: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
 
     svcCreateAccount(
       email: String!

@@ -1,8 +1,22 @@
 module.exports = `
-  type AppUser {
+  type PasswordCred {
     id: ID!
     email: String!
-    verified_email: Boolean
+    verifiedEmail: Boolean!
+  }
+
+  type OauthCred {
+    id: ID!
+    provider: String!
+    providerID: String!
+    oauthEmail: String
+  }
+
+  union AppUserCredential = PasswordCred | OauthCred
+
+  type AppUser {
+    id: ID!
+    credentials: [AppUserCredential!]!
     first_name: String
     last_name: String
   }
@@ -27,6 +41,13 @@ module.exports = `
 
     # How strong must a password be for a user to use it?
     minPasswordStrength: Int
+
+    # Are facebook logins enabled?
+    fbLoginEnabled: Boolean
+    googleLoginEnabled: Boolean
+
+    oauthRedirectUrl: String
+    oauthFailureUrl: String
   }
 
   type AppConfig {
@@ -47,6 +68,13 @@ module.exports = `
 
     # How strong must a password be for a user to use it?
     minPasswordStrength: Int
+
+    # Are facebook logins enabled?
+    fbLoginEnabled: Boolean
+    googleLoginEnabled: Boolean
+
+    oauthRedirectUrl: String
+    oauthFailureUrl: String
   }
 
   type AppHost {
