@@ -1,8 +1,28 @@
 module.exports = `
+  enum CredentialType {
+    PASSWORD
+    OAUTH
+  }
+
+  # maybe make this into a union
+  type UserCredential {
+    id: ID!
+    type: CredentialType!
+    email: String
+    emailIsVerified: Boolean
+
+    # e.g. facebook, google
+    provider: String
+    providerID: String
+    photoURL: String
+  }
+
   type SvcUser {
     id: ID!
-    email: String!
-    emailIsVerified: Boolean!
+    primaryEmail: String!
+    firstName: String
+    lastName: String
+    credentials: [UserCredential!]!
   }
 
   type SvcAuthToken {
