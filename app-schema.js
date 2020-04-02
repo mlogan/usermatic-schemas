@@ -42,9 +42,10 @@ module.exports = `
     # How strong must a password be for a user to use it?
     minPasswordStrength: Int
 
-    # Are facebook logins enabled?
+    # Which oauth providers are enabled
     fbLoginEnabled: Boolean
     googleLoginEnabled: Boolean
+    githubLoginEnabled: Boolean
 
     oauthRedirectUrl: String
     oauthFailureUrl: String
@@ -69,9 +70,10 @@ module.exports = `
     # How strong must a password be for a user to use it?
     minPasswordStrength: Int
 
-    # Are facebook logins enabled?
+    # Which oauth providers are enabled
     fbLoginEnabled: Boolean
     googleLoginEnabled: Boolean
+    githubLoginEnabled: Boolean
 
     oauthRedirectUrl: String
     oauthFailureUrl: String

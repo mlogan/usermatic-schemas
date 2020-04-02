@@ -40,6 +40,8 @@ module.exports = `
     fbLoginUrl: String!
     googleLoginEnabled: Boolean!
     googleLoginUrl: String!
+    githubLoginEnabled: Boolean!
+    githubLoginUrl: String!
   }
 
   type SvcSessionData {
