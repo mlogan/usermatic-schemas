@@ -94,9 +94,9 @@ module.exports = `
   }
 
   enum PricePlan {
-    BASIC
-    PRO
-    PREMIUM
+    TO
+    T1
+    T2
   }
 
   type StripeLineItem {
@@ -130,6 +130,12 @@ module.exports = `
     clientSecret: ID!
   }
 
+  type StripePlan {
+    id: ID!
+    stripeId: ID!
+    basePrice: Int!
+  }
+
   type Stripe {
     id: ID! # the userId who is doing the checkout
     setupIntent: StripeSetupIntent!
@@ -140,6 +146,7 @@ module.exports = `
     apps(userId: ID!): [App]!
     app(appId: ID!): App!
     stripe(userId: ID!): Stripe!
+    stripePlan(tier: String!): StripePlan!
   }
 
   type Mutation {
