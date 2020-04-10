@@ -94,7 +94,7 @@ module.exports = `
   }
 
   enum PricePlan {
-    TO
+    T0
     T1
     T2
   }
