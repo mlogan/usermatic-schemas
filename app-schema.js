@@ -49,6 +49,9 @@ module.exports = `
 
     oauthRedirectUrl: String
     oauthFailureUrl: String
+
+    # allow connection from http, for testing.
+    allowHttp: Boolean
   }
 
   type AppConfig {
@@ -77,6 +80,9 @@ module.exports = `
 
     oauthRedirectUrl: String
     oauthFailureUrl: String
+
+    # allow connection from http, for testing.
+    allowHttp: Boolean
   }
 
   type AppHost {
