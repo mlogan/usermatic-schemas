@@ -47,6 +47,14 @@ module.exports = `
     googleLoginEnabled: Boolean
     githubLoginEnabled: Boolean
 
+    # oauth provider id/secrets
+    fbClientID: String
+    fbClientSecret: String
+    googleClientID: String
+    googleClientSecret: String
+    githubClientID: String
+    githubClientSecret: String
+
     oauthRedirectUrl: String
     oauthFailureUrl: String
 
@@ -71,12 +79,20 @@ module.exports = `
     resetPasswordRedirectUri: String
 
     # How strong must a password be for a user to use it?
-    minPasswordStrength: Int
+    minPasswordStrength: Int!
 
     # Which oauth providers are enabled
     fbLoginEnabled: Boolean
     googleLoginEnabled: Boolean
     githubLoginEnabled: Boolean
+
+    # oauth provider id/secrets
+    fbClientID: String
+    fbClientSecret: String
+    googleClientID: String
+    googleClientSecret: String
+    githubClientID: String
+    githubClientSecret: String
 
     oauthRedirectUrl: String
     oauthFailureUrl: String
