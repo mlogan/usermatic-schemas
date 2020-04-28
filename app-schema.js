@@ -179,7 +179,7 @@ module.exports = `
       hosts: [HostInput]!
     ): App!
 
-    deleteApp(appId: ID!): Boolean!
+    deleteApp(appId: ID!, reauthToken: String!): Boolean!
 
     addHost(appId: ID!, host: String!): AppHost!
 
