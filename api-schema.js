@@ -83,5 +83,29 @@ module.exports = `
 
     svcResetPassword(token: String!, newPassword: String!): PasswordResetResult!
     svcRequestPasswordResetEmail(email: String!): Boolean
+
+    # Request that the server sign a token provided by the client.
+    # Used for forcing re-authentication before sensitive operations. e.g.
+    # the client application may require that the user re-authenticates before
+    # deleting some object. The client can then prompt for the password, and
+    # call
+    #
+    #    signToken("{ deleteObject: 123abc }", "hunter2")
+    #
+    # Usermatic signs the provided string, and returns it to the client. The
+    # client can now send it to their backend as part of the deletion request,
+    # which proves to their application backend that the user re-authenticated.
+    #
+    # The response is a signed token with the contents:
+    #    { id: string, userContents: string, reauthenticationMethods: string[] }
+    #
+    # where:
+    #   'id' is the id of the successfully authenticated user,
+    #   'userContents' is the string provided in the contents argument, and
+    #   'reauthenticationMethods' is a list of the authentication methods that
+    #     were supplied to signToken (e.g. 'password').
+    #
+    # The signing key is the application's secret key.
+    signReauthenticationToken(contents: String!, password: String): String!
   }
 `
