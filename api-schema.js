@@ -81,7 +81,7 @@ module.exports = `
     svcChangePassword(oldPassword: String!, newPassword: String!): Boolean
 
     svcVerifyEmail(token: String!): VerificationResult!
-    svcSendVerificationEmail: Boolean
+    svcSendVerificationEmail(email: String!): Boolean
 
     svcResetPassword(token: String!, newPassword: String!): PasswordResetResult!
     svcRequestPasswordResetEmail(email: String!): Boolean
