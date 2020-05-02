@@ -76,6 +76,8 @@ module.exports = `
       stayLoggedIn: Boolean = false
     ): SvcAuthToken
 
+    addPassword(email: String!, password: String!): Boolean
+
     svcChangePassword(oldPassword: String!, newPassword: String!): Boolean
 
     svcVerifyEmail(token: String!): VerificationResult!
