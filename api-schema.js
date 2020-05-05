@@ -17,7 +17,7 @@ module.exports = `
     photoURL: String
   }
 
-  type SvcUser {
+  type User {
     id: ID!
     primaryEmail: String!
     firstName: String
@@ -25,7 +25,7 @@ module.exports = `
     credentials: [UserCredential!]!
   }
 
-  type SvcAuthToken {
+  type AuthToken {
     # A JWT that has been signed with the shared secret key for the
     # app that the user is logged in to. This JWT should be sent to the
     # client site's server, which can verify the JWT to ascertain that
@@ -44,15 +44,15 @@ module.exports = `
     githubLoginUrl: String!
   }
 
-  type SvcSessionData {
-    auth: SvcAuthToken
+  type SessionData {
+    auth: AuthToken
     csrfToken: String!
     config: AppConfig
   }
 
   type Query {
-    svcGetSessionJWT(appId: ID!): SvcSessionData
-    svcGetAuthenticatedUser: SvcUser!
+    getSessionJWT(appId: ID!): SessionData
+    getAuthenticatedUser: User!
   }
 
   type VerificationResult {
@@ -65,26 +65,26 @@ module.exports = `
 
   type Mutation {
     logout: Boolean
-    loginPassword(email: String!, password: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
+    loginPassword(email: String!, password: String!, stayLoggedIn: Boolean = false): AuthToken!
 
-    loginOauth(oauthToken: String!, stayLoggedIn: Boolean = false): SvcAuthToken!
+    loginOauth(oauthToken: String!, stayLoggedIn: Boolean = false): AuthToken!
 
-    svcCreateAccount(
+    createAccount(
       email: String!
       password: String!
       loginAfterCreation: Boolean = false
       stayLoggedIn: Boolean = false
-    ): SvcAuthToken
+    ): AuthToken
 
     addPassword(email: String!, password: String!): Boolean
 
-    svcChangePassword(oldPassword: String!, newPassword: String!): Boolean
+    changePassword(oldPassword: String!, newPassword: String!): Boolean
 
-    svcVerifyEmail(token: String!): VerificationResult!
-    svcSendVerificationEmail(email: String!): Boolean
+    verifyEmail(token: String!): VerificationResult!
+    sendVerificationEmail(email: String!): Boolean
 
-    svcResetPassword(token: String!, newPassword: String!): PasswordResetResult!
-    svcRequestPasswordResetEmail(email: String!): Boolean
+    resetPassword(token: String!, newPassword: String!): PasswordResetResult!
+    requestPasswordResetEmail(email: String!): Boolean
 
     # Request that the server sign a token provided by the client.
     # Used for forcing re-authentication before sensitive operations. e.g.
