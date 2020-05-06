@@ -83,7 +83,13 @@ module.exports = `
     verifyEmail(token: String!): VerificationResult!
     sendVerificationEmail(email: String!): Boolean
 
-    resetPassword(token: String!, newPassword: String!): PasswordResetResult!
+    resetPassword(
+      token: String!,
+      newPassword: String!,
+      loginAfterReset: Boolean = false,
+      stayLoggedIn: Boolean = false
+    ): PasswordResetResult!
+
     requestPasswordResetEmail(email: String!): Boolean
 
     # Request that the server sign a token provided by the client.
