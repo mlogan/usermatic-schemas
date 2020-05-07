@@ -17,11 +17,16 @@ module.exports = `
     photoURL: String
   }
 
+  type Name {
+    family: String
+    given: String
+    full: String
+  }
+
   type User {
     id: ID!
     primaryEmail: String!
-    firstName: String
-    lastName: String
+    name: Name!
     credentials: [UserCredential!]!
   }
 
@@ -47,11 +52,11 @@ module.exports = `
   type SessionData {
     auth: AuthToken
     csrfToken: String!
-    config: AppConfig
+    config: AppConfig!
   }
 
   type Query {
-    getSessionJWT(appId: ID!): SessionData
+    getSessionJWT(appId: ID!): SessionData!
     getAuthenticatedUser: User!
   }
 
