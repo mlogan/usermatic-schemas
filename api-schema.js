@@ -55,9 +55,16 @@ module.exports = `
     config: AppConfig!
   }
 
+  type TOTPInfo {
+    token: String!
+    otpauthUrl: String!
+  }
+
   type Query {
     getSessionJWT(appId: ID!): SessionData!
     getAuthenticatedUser: User!
+
+    getTotpKey: TOTPInfo!
   }
 
   type VerificationResult {
@@ -70,9 +77,16 @@ module.exports = `
 
   type Mutation {
     logout: Boolean
-    loginPassword(email: String!, password: String!, stayLoggedIn: Boolean = false): AuthToken!
+    loginPassword(
+      email: String!,
+      password: String!,
+      totpCode: String,
+      stayLoggedIn: Boolean = false
+    ): AuthToken!
 
     loginOauth(oauthToken: String!, stayLoggedIn: Boolean = false): AuthToken!
+
+    addTotp(token: String!, code: String!): Boolean
 
     createAccount(
       email: String!
