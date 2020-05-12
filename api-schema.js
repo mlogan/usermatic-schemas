@@ -2,6 +2,7 @@ module.exports = `
   enum CredentialType {
     PASSWORD
     OAUTH
+    TOTP
   }
 
   # maybe make this into a union
@@ -40,6 +41,8 @@ module.exports = `
 
   type AppConfig {
     minPasswordStrength: Int
+
+    totpEnabled: Boolean!
 
     fbLoginEnabled: Boolean!
     fbLoginUrl: String!
@@ -84,7 +87,7 @@ module.exports = `
       stayLoggedIn: Boolean = false
     ): AuthToken!
 
-    loginOauth(oauthToken: String!, stayLoggedIn: Boolean = false): AuthToken!
+    loginOauth(oauthToken: String!, totpCode: String, stayLoggedIn: Boolean = false): AuthToken!
 
     addTotp(token: String!, code: String!): Boolean
 

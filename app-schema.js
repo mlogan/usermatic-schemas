@@ -12,7 +12,11 @@ module.exports = `
     oauthEmail: String
   }
 
-  union AppUserCredential = PasswordCred | OauthCred
+  type TotpCred {
+    id: ID!
+  }
+
+  union AppUserCredential = PasswordCred | OauthCred | TotpCred
 
   type AppUser {
     id: ID!
@@ -28,6 +32,10 @@ module.exports = `
   input AppConfigInput {
     verifyEmail: Boolean
     requireVerification: Boolean
+
+    # MFA settings
+    totpEnabled: Boolean
+    requireMFA: Boolean
 
     # where verification emails should link to
     verificationTargetUri: String
@@ -67,6 +75,10 @@ module.exports = `
     verifyEmail: Boolean
     # Require email verification before login
     requireVerification: Boolean
+
+    # MFA settings
+    totpEnabled: Boolean
+    requireMFA: Boolean
 
     # where verification emails should link to
     verificationTargetUri: String
@@ -112,6 +124,7 @@ module.exports = `
     users (count: Int, offset: Int): [AppUser]!
     secret: String!
     config: AppConfig!
+    plan: PricePlan
     hosts: [AppHost]!
   }
 
