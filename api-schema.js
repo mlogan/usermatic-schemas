@@ -31,12 +31,20 @@ module.exports = `
     credentials: [UserCredential!]!
   }
 
-  type AuthToken {
+  type LoginData {
     # A JWT that has been signed with the shared secret key for the
     # app that the user is logged in to. This JWT should be sent to the
     # client site's server, which can verify the JWT to ascertain that
     # the user is logged in to the client site.
     userJwt: String!
+
+    # Whenever a user logs in, they also automatically get a reauth JWT
+    # with userContents = { operations: [] } and the 'login' flag set.
+    # reauthenticationMethods will be set to indicate how they logged in.
+    # This field is not present when the user has been authenticated via
+    # an auth cookie - that is, we only populate this if they actually
+    # presented credentials
+    reauthToken: String
   }
 
   type AppConfig {
@@ -53,7 +61,7 @@ module.exports = `
   }
 
   type SessionData {
-    auth: AuthToken
+    auth: LoginData
     csrfToken: String!
     config: AppConfig!
   }
@@ -68,6 +76,7 @@ module.exports = `
     getAuthenticatedUser: User!
 
     getTotpKey: TOTPInfo!
+    getRecoveryCodesCount: Int!
   }
 
   type VerificationResult {
@@ -78,6 +87,10 @@ module.exports = `
     redirectUri: String
   }
 
+  type RecoveryCodes {
+    codes: [String!]!
+  }
+
   type Mutation {
     logout: Boolean
     loginPassword(
@@ -85,18 +98,23 @@ module.exports = `
       password: String!,
       totpCode: String,
       stayLoggedIn: Boolean = false
-    ): AuthToken!
+    ): LoginData
 
-    loginOauth(oauthToken: String!, totpCode: String, stayLoggedIn: Boolean = false): AuthToken!
+    loginOauth(oauthToken: String!, totpCode: String, stayLoggedIn: Boolean = false): LoginData!
+
+    createRecoveryCodes(
+      reauthToken: String!,
+    ): RecoveryCodes
 
     addTotp(token: String!, code: String!): Boolean
+    clearTotp(reauthToken: String!): Boolean
 
     createAccount(
       email: String!
       password: String!
       loginAfterCreation: Boolean = false
       stayLoggedIn: Boolean = false
-    ): AuthToken
+    ): LoginData
 
     addPassword(email: String!, password: String!): Boolean
 
@@ -127,10 +145,12 @@ module.exports = `
     # which proves to their application backend that the user re-authenticated.
     #
     # The response is a signed token with the contents:
-    #    { id: string, userContents: string, reauthenticationMethods: string[] }
+    #    { id: string, login: boolean, userContents: string,
+    #      reauthenticationMethods: string[] }
     #
     # where:
     #   'id' is the id of the successfully authenticated user,
+    #   'login' indicates that the token was populated by loginPassword or loginOauth
     #   'userContents' is the string provided in the contents argument, and
     #   'reauthenticationMethods' is a list of the authentication methods that
     #     were supplied to signToken (e.g. 'password').
