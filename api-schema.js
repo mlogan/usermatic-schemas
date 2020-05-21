@@ -91,16 +91,27 @@ module.exports = `
     codes: [String!]!
   }
 
+  input PasswordInput {
+    email: String!
+    password: String!
+  }
+
+  input LoginCredentialInput {
+    # only one of password/oauthToken should be present.
+    password: PasswordInput
+    oauthToken: String
+
+    # totpCode is optional, for 2FA logins.
+    totpCode: String
+  }
+
   type Mutation {
     logout: Boolean
-    loginPassword(
-      email: String!,
-      password: String!,
-      totpCode: String,
+
+    login(
+      credential: LoginCredentialInput!,
       stayLoggedIn: Boolean = false
     ): LoginData
-
-    loginOauth(oauthToken: String!, totpCode: String, stayLoggedIn: Boolean = false): LoginData!
 
     createRecoveryCodes(
       reauthToken: String!,
