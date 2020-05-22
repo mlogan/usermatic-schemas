@@ -29,14 +29,14 @@ module.exports = `
     primaryEmail: String!
     name: Name!
     credentials: [UserCredential!]!
-  }
 
-  type LoginData {
+    recoveryCodesRemaining: Int!
+
     # A JWT that has been signed with the shared secret key for the
     # app that the user is logged in to. This JWT should be sent to the
     # client site's server, which can verify the JWT to ascertain that
     # the user is logged in to the client site.
-    userJwt: String!
+    userJwt: String
 
     # Whenever a user logs in, they also automatically get a reauth JWT
     # with userContents = { operations: [] } and the 'login' flag set.
@@ -61,9 +61,7 @@ module.exports = `
   }
 
   type SessionData {
-    auth: LoginData
     csrfToken: String!
-    config: AppConfig!
   }
 
   type TOTPInfo {
@@ -72,11 +70,9 @@ module.exports = `
   }
 
   type Query {
-    getSessionJWT(appId: ID!): SessionData!
-    getAuthenticatedUser: User!
-
+    getAppConfig(appId: ID!): AppConfig!
+    getAuthenticatedUser: User
     getTotpKey: TOTPInfo!
-    getRecoveryCodesCount: Int!
   }
 
   type VerificationResult {
@@ -85,10 +81,6 @@ module.exports = `
 
   type PasswordResetResult {
     redirectUri: String
-  }
-
-  type RecoveryCodes {
-    codes: [String!]!
   }
 
   input PasswordInput {
@@ -105,29 +97,58 @@ module.exports = `
     totpCode: String
   }
 
+  type LoginPayload {
+    user: User!
+    refetch: Query
+  }
+
+  type EmptyPayload {
+    refetch: Query
+  }
+
+  type RecoveryCodePayload {
+    codes: [String!]!
+    refetch: Query
+  }
+
+  type SessionPayload {
+    csrfToken: String!
+    refetch: Query
+  }
+
+  type PasswordResetPayload {
+    redirectUri: String
+    refetch: Query
+  }
+
   type Mutation {
-    logout: Boolean
+    # This is mutation because a) it modifies client cookies and b)
+    # we need serial execution so that it can run before refetch queries.
+    # getSessionJWT(appId: ID!): SessionData!
+    getSessionJWT(appId: ID!): SessionPayload!
+
+    logout: EmptyPayload
 
     login(
       credential: LoginCredentialInput!,
       stayLoggedIn: Boolean = false
-    ): LoginData
+    ): LoginPayload
 
     createRecoveryCodes(
       reauthToken: String!,
-    ): RecoveryCodes
+    ): RecoveryCodePayload
 
-    addTotp(token: String!, code: String!): Boolean
-    clearTotp(reauthToken: String!): Boolean
+    addTotp(token: String!, code: String!): EmptyPayload
+    clearTotp(reauthToken: String!): EmptyPayload
 
     createAccount(
       email: String!
       password: String!
       loginAfterCreation: Boolean = false
       stayLoggedIn: Boolean = false
-    ): LoginData
+    ): LoginPayload
 
-    addPassword(email: String!, password: String!): Boolean
+    addPassword(email: String!, password: String!): EmptyPayload
 
     changePassword(oldPassword: String!, newPassword: String!): Boolean
 
@@ -139,7 +160,7 @@ module.exports = `
       newPassword: String!,
       loginAfterReset: Boolean = false,
       stayLoggedIn: Boolean = false
-    ): PasswordResetResult!
+    ): PasswordResetPayload!
 
     requestPasswordResetEmail(email: String!): Boolean
 
