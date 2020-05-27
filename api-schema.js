@@ -75,8 +75,9 @@ module.exports = `
     getTotpKey: TOTPInfo!
   }
 
-  type VerificationResult {
+  type VerificationPayload {
     redirectUri: String!
+    refetch: Query
   }
 
   type PasswordResetResult {
@@ -102,7 +103,8 @@ module.exports = `
     refetch: Query
   }
 
-  type EmptyPayload {
+  type SuccessPayload {
+    success: Boolean
     refetch: Query
   }
 
@@ -121,13 +123,18 @@ module.exports = `
     refetch: Query
   }
 
+  type ReauthTokenPayload {
+    token: String!
+    refetch: Query
+  }
+
   type Mutation {
     # This is mutation because a) it modifies client cookies and b)
     # we need serial execution so that it can run before refetch queries.
     # getSessionJWT(appId: ID!): SessionData!
     getSessionJWT(appId: ID!): SessionPayload!
 
-    logout: EmptyPayload
+    logout: SuccessPayload
 
     login(
       credential: LoginCredentialInput!,
@@ -138,8 +145,8 @@ module.exports = `
       reauthToken: String!,
     ): RecoveryCodePayload
 
-    addTotp(token: String!, code: String!): EmptyPayload
-    clearTotp(reauthToken: String!): EmptyPayload
+    addTotp(token: String!, code: String!): SuccessPayload
+    clearTotp(reauthToken: String!): SuccessPayload
 
     createAccount(
       email: String!
@@ -148,12 +155,12 @@ module.exports = `
       stayLoggedIn: Boolean = false
     ): LoginPayload
 
-    addPassword(email: String!, password: String!): EmptyPayload
+    addPassword(email: String!, password: String!): SuccessPayload
 
-    changePassword(oldPassword: String!, newPassword: String!): Boolean
+    changePassword(oldPassword: String!, newPassword: String!): SuccessPayload
 
-    verifyEmail(token: String!): VerificationResult!
-    sendVerificationEmail(email: String!): Boolean
+    verifyEmail(token: String!): VerificationPayload!
+    sendVerificationEmail(email: String!): SuccessPayload
 
     resetPassword(
       token: String!,
@@ -162,7 +169,7 @@ module.exports = `
       stayLoggedIn: Boolean = false
     ): PasswordResetPayload!
 
-    requestPasswordResetEmail(email: String!): Boolean
+    requestPasswordResetEmail(email: String!): SuccessPayload
 
     # Request that the server sign a token provided by the client.
     # Used for forcing re-authentication before sensitive operations. e.g.
@@ -188,6 +195,6 @@ module.exports = `
     #     were supplied to signToken (e.g. 'password').
     #
     # The signing key is the application's secret key.
-    signReauthenticationToken(contents: String!, password: String): String!
+    signReauthenticationToken(contents: String!, password: String): ReauthTokenPayload
   }
 `
