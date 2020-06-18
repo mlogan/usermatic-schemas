@@ -118,10 +118,24 @@ module.exports = `
     hostname: String!
   }
 
+  input UserFilter {
+    email: String
+    hasPassword: Boolean
+    # has any oauth login
+    hasOauth: Boolean
+    # has oauth login from specific providers
+    hasOauthProviders: [String!]
+  }
+
+  type UserResult {
+    users: [AppUser!]!
+    cursor: String!
+  }
+
   type App {
     id: ID!
     name: String!
-    users (count: Int, offset: Int): [AppUser]!
+    users (count: Int, filter: UserFilter, cursor: String): UserResult!
     secret: String!
     config: AppConfig!
     plan: PricePlan
