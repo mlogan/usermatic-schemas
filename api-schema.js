@@ -159,6 +159,8 @@ module.exports = `
 
     changePassword(oldPassword: String!, newPassword: String!): SuccessPayload
 
+    removeOauthCredential(credentialId: ID!, reauthToken: String!): SuccessPayload
+
     verifyEmail(token: String!): VerificationPayload!
     sendVerificationEmail(email: String!): SuccessPayload
 
