@@ -129,7 +129,8 @@ module.exports = `
 
   type UserResult {
     users: [AppUser!]!
-    cursor: String!
+    # cursor can be null if zero users are returned
+    cursor: String
   }
 
   type App {
