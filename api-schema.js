@@ -48,6 +48,8 @@ module.exports = `
   }
 
   type AppConfig {
+    appName: String!
+
     minPasswordStrength: Int
 
     totpEnabled: Boolean!
