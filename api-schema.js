@@ -133,7 +133,6 @@ module.exports = `
   type Mutation {
     # This is mutation because a) it modifies client cookies and b)
     # we need serial execution so that it can run before refetch queries.
-    # getSessionJWT(appId: ID!): SessionData!
     getSessionJWT(appId: ID!): SessionPayload!
 
     logout: SuccessPayload
