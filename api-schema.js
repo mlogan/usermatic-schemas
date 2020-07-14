@@ -102,6 +102,10 @@ module.exports = `
 
   type LoginPayload {
     user: User!
+    # Since the initial login via Oauth creates a new account, this
+    # flag is set to true if a new account was created as a result of the
+    # login.
+    accountCreated: Boolean!
     refetch: Query
   }
 
