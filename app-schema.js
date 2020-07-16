@@ -136,7 +136,7 @@ module.exports = `
   type App {
     id: ID!
     name: String!
-    users (count: Int, filter: UserFilter, cursor: String): UserResult!
+    users (count: Int, userFilter: UserFilter, cursor: String): UserResult!
     secret: String!
     config: AppConfig!
     plan: PricePlan
