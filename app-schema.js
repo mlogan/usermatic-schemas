@@ -140,7 +140,7 @@ module.exports = `
     secret: String!
     config: AppConfig!
     plan: PricePlan
-    hosts: [AppHost]!
+    hosts: [AppHost!]!
   }
 
   enum PricePlan {
@@ -193,10 +193,20 @@ module.exports = `
   }
 
   type Query {
-    apps(userId: ID!): [App]!
+    apps(userId: ID!): [App!]!
     app(appId: ID!): App!
     stripe(userId: ID!): Stripe!
     stripePlan(tier: String!): StripePlan!
+  }
+
+  type CreateAppPayload {
+    app: App!
+    refetch: Query
+  }
+
+  type SuccessPayload {
+    success: Boolean
+    refetch: Query
   }
 
   type Mutation {
@@ -205,13 +215,13 @@ module.exports = `
       userId: ID!
       name: String!
       hosts: [HostInput]!
-    ): App!
+    ): CreateAppPayload!
 
-    deleteApp(appId: ID!, reauthToken: String!): Boolean!
+    deleteApp(appId: ID!, reauthToken: String!): SuccessPayload!
 
-    addHost(appId: ID!, host: String!): AppHost!
+    addHost(appId: ID!, host: String!): SuccessPayload!
 
-    removeHost(appId: ID!, hostId: ID!): Boolean!
+    removeHost(appId: ID!, hostId: ID!): SuccessPayload!
 
     addAppUser(
       appId: ID!
