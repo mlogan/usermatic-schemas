@@ -19,9 +19,13 @@ module.exports = `
   }
 
   type Name {
-    family: String
-    given: String
-    full: String
+    first: String
+    last: String
+  }
+
+  input NameInput {
+    first: String
+    last: String
   }
 
   type User {
@@ -177,6 +181,8 @@ module.exports = `
     ): PasswordResetPayload!
 
     requestPasswordResetEmail(email: String!): SuccessPayload
+
+    updateUserProfile(name: NameInput): SuccessPayload
 
     # Request that the server sign a token provided by the client.
     # Used for forcing re-authentication before sensitive operations. e.g.
