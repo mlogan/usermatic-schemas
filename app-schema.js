@@ -18,11 +18,19 @@ module.exports = `
 
   union AppUserCredential = PasswordCred | OauthCred | TotpCred
 
+  type Name {
+    first: String
+    last: String
+  }
+
+  type Profile {
+    name: Name
+  }
+
   type AppUser {
     id: ID!
     credentials: [AppUserCredential!]!
-    first_name: String
-    last_name: String
+    profile: Profile
   }
 
   input HostInput {
