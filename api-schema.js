@@ -16,6 +16,10 @@ module.exports = `
     provider: String
     providerID: String
     photoURL: String
+
+    # optional access and refresh tokens.
+    accessToken: String
+    refreshToken: String
   }
 
   type Name {

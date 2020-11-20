@@ -68,6 +68,8 @@ module.exports = `
     fbClientSecret: String
     googleClientID: String
     googleClientSecret: String
+    googleScopes: String
+    googleOffline: Boolean
     githubClientID: String
     githubClientSecret: String
 
@@ -111,6 +113,8 @@ module.exports = `
     fbClientSecret: String
     googleClientID: String
     googleClientSecret: String
+    googleScopes: String
+    googleOffline: Boolean
     githubClientID: String
     githubClientSecret: String
 
